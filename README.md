@@ -10,6 +10,42 @@ The image provides:
 The image supports both Postgres or MySQL-compatible databases.
 
 
+## Quick demo
+
+You'll need a working Docker setup and `docker-compose`.
+
+Clone this repository:
+
+    git clone https://github.com/melo/docker-minion.git
+
+Start it up:
+
+    cd docker-minion/demo
+    docker-compose up -d
+
+This will start a MySQL database, the Web UI and a worker. Open the Web UI at [http://127.0.0.1:3000/](). Click around to get to know it. Notice that all the items at the top are clickable, and will show you filtered lists of jobs, or the list of connected workers.
+
+At the end the items in the listings there is a `>` symbol, that will show you the raw data for the item in question.
+
+The Web UI includes a simple "job creation" API, so we can start a bunch of jobs using the Echo task code included in this demo:
+
+    for i in `seq 1 200` ; do curl -d "{ \"count\": $i }" http://127.0.0.1:3000/job/echo ; echo ; done
+
+This will create 200 jobs. Click around in the Web UI to see the jobs. Expand them with the `>` link at the end of the items in the listing.
+
+Each worker defaults to 4 concurrent jobs (the badge near the _Active_ at the top never goes above 4). One way to increase the concurrency is by adding more workers:
+
+    docker-compose up -d --scale worker=5
+
+Look at the Web UI again. You'll see that the badge for workers will show 6. This is because docker-compose will kill the original worker and start 5 new ones, and Minion takes a bit to clear old workers.
+
+Repeat the log generation script above, to generate 200 more workers. You'll see that there are now 20 active jobs at a time (4 jobs per worker, 5 workers).
+
+After your are done, clean up with:
+
+    docker-compose down
+
+
 ## Using this image
 
 To use this image you'll need to start at least a Worker container, and provide it with credentials for a Postgres or MySQL database. Starting a container for the Web UI is optional but recommended.

@@ -1,0 +1,27 @@
+version: '3'
+
+services:
+  mysql:
+    image: percona/percona-server:5.7
+    environment:
+      MYSQL_ROOT_PASSWORD: "bigSecret"
+      MYSQL_DATABASE: "minion_jobs"
+      MYSQL_USER: "minion_user"
+      MYSQL_PASSWORD: "miniMe"
+
+  webui:
+    build:
+      context: .
+    command: ["webui", "--mode", "production"]
+    environment:
+      MINION_SOURCE: "mysql://minion_user:miniMe@mysql/minion_jobs" 
+    ports:
+      - 3000:3000
+
+  worker:
+    build:
+      context: .
+    command: ["worker", "--mode", "production"]
+    environment:
+      MINION_SOURCE: "mysql://minion_user:miniMe@mysql/minion_jobs" 
+      MINION_PLUGINS: "My::Workers"
