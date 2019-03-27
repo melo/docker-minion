@@ -1,0 +1,31 @@
+#!/usr/bin/env perl
+
+use Mojolicious::Lite;
+use Module::Find;
+
+my $log = app->log;
+
+
+## Parse the MINION_SOURCE config, required
+my $src = $ENV{MINION_SOURCE} || '<undefined>';
+my ($type) = $src =~ m/^(\w+):/;
+unless ($type) {
+  $log->fatal("FATAL: failed to parse MINION_SOURCE '$src'");
+  exit(1);
+}
+
+plugin Minion => {$type => $src};
+
+
+## Parse the MINION_PLUGINS, load the plugins found
+if (my $base_class = $ENV{MINION_PLUGINS}) {
+  for my $class (useall($base_class)) {
+	$log->debug("Loading plugin '$class'");
+	plugin $class;
+  }
+}
+
+
+## Start this up...
+$log->info('Starting Minion worker');
+app->start;

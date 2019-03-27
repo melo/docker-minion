@@ -1,0 +1,47 @@
+#!/usr/bin/env perl
+
+use Mojolicious::Lite;
+ 
+my $log = app->log;
+
+
+## Parse the MINION_SOURCE config, required
+my $src = $ENV{MINION_SOURCE} || '<undefined>';
+my ($type) = $src =~ m/^(\w+):/;
+unless ($type) {
+  $log->fatal("FATAL: failed to parse MINION_SOURCE '$src'");
+  exit(1);
+}
+
+plugin Minion => {$type => $src};
+plugin 'Minion::Admin';
+
+
+## Default is the Admin interface
+get '/' => sub { return shift->redirect_to('/minion') };
+
+
+## Job helper
+get '/job' => sub {
+  return shift->render(text => "POST a JSON doc to /job/<topic> to queue something\n");
+};
+
+post '/job' => sub {
+  my $c = shift;
+  return $c->render(data => $c->req->body);
+};
+
+post '/job/:job' => sub {
+  my $c = shift;
+  my $req = $c->req;
+
+  
+  my $data = $c->req->json;
+  my $id = $c->minion->enqueue($c->stash('job'), [$data], $c->req->params->to_hash);
+  $c->render(json => { id => $id });
+};
+
+
+## Start this up...
+$log->info('Starting Minion Web UI');
+app->start;
