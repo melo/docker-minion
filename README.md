@@ -1,6 +1,6 @@
 # Minion Docker Image
 
-This Docker image allows you to run a [Minion](https://metacpan.org/pod/Minion) job queue.
+This Docker image allows you to run a [Minion](https://metacpan.org/pod/Minion) job queue. See more details at [https://hub.docker.com/r/melopt/minion]().
 
 The image provides:
 
