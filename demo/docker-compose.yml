@@ -13,6 +13,7 @@ services:
     build:
       context: .
     command: ["webui", "--mode", "production"]
+    restart: unless-stopped
     environment:
       MINION_SOURCE: "mysql://minion_user:miniMe@mysql/minion_jobs" 
     ports:
@@ -22,6 +23,7 @@ services:
     build:
       context: .
     command: ["worker", "--mode", "production"]
+    restart: unless-stopped
     environment:
       MINION_SOURCE: "mysql://minion_user:miniMe@mysql/minion_jobs" 
       MINION_PLUGINS: "My::Workers"
