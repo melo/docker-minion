@@ -33,7 +33,7 @@ All services should be `up`. The first time in particular, MySQL will take some 
 
 ... where `<service>` should be one of `webui` or `worker`.
 
-Open the Web UI at [http://127.0.0.1:3000/](). If you get an error moments after starting everything up with `docker-compose up -d` above, wait a few seconds for MySQL to finishing starting up, and try again.
+Open the Web UI at [http://127.0.0.1:3000/](http://127.0.0.1:3000/). If you get an error moments after starting everything up with `docker-compose up -d` above, wait a few seconds for MySQL to finishing starting up, and try again.
 
 Click around to get to know it. Notice that all the items at the top are clickable, and will show you filtered lists of jobs, or the list of connected workers.
 
