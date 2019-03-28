@@ -16,7 +16,7 @@ services:
     environment:
       MINION_SOURCE: "mysql://minion_user:miniMe@mysql/minion_jobs" 
     ports:
-      - 3000:127.0.0.1:3000
+      - 127.0.0.1:3000:3000
 
   worker:
     build:
