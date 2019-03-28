@@ -15,7 +15,7 @@ FROM melopt/alpine-perl-runtime
 
 WORKDIR /app
 
-RUN apk --no-cache add mariadb-dev postgresql-dev
+RUN apk --no-cache add mariadb-client-libs postgresql-libs
 
 COPY --from=builder /minion /minion
 
