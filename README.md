@@ -23,7 +23,17 @@ Start it up:
     cd docker-minion/demo
     docker-compose up -d
 
-This will start a MySQL database, the Web UI and a worker. Open the Web UI at [http://127.0.0.1:3000/](). Click around to get to know it. Notice that all the items at the top are clickable, and will show you filtered lists of jobs, or the list of connected workers.
+This will start a MySQL database, the Web UI and a worker. You should make sure that all three started ok:
+
+    docker-compose ps
+
+All services should be `up`. The first time in particular, MySQL will take some time to start, and the worker might die with because the DB is down. If a service is down, you can start the specific service with:
+
+    docker-compose up -d <service>
+
+... where `<service>` should be one of `webui` or `worker`.
+
+Open the Web UI at [http://127.0.0.1:3000/](). Click around to get to know it. Notice that all the items at the top are clickable, and will show you filtered lists of jobs, or the list of connected workers.
 
 At the end the items in the listings there is a `>` symbol, that will show you the raw data for the item in question.
 
