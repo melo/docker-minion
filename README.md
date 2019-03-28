@@ -134,7 +134,7 @@ or...
 To start the Web UI, use:
 
     docker run -d --name my_worker -e MINION_SOURCE=... \
-           -p 3000:127.0.0.1:3000                       \
+           -p 127.0.0.1:3000:3000                       \
            <your-image-name> webui --mode production
 
 Please note that there is no authentication on the Web UI. We therefore start it at http://127.0.0.1:3000/ and not on a possibly exposed network interface. We strongly recommend that you setup a reverse proxy (like [Traefik](https://traefik.io "Traefik - The Cloud Native Edge Router") or [nginx](https://www.nginx.org/ "NGINX | High Performance Load Balancer, Web Server, &amp; Reverse Proxy")) and configure proper authentication there.
