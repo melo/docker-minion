@@ -1,22 +1,20 @@
 ### Prepare the dependencies
-FROM melopt/alpine-perl-devel AS builder
+FROM melopt/perl-alt:latest-build AS builder
 
 RUN apk --no-cache add mariadb-dev postgresql-dev
 
-COPY cpanfile cpanfile.snapshot /minion/
-RUN  cd /minion && carton install --deployment && rm -rf local/cache ~/.cpanm*
+COPY cpanfile* /stack/
+RUN  cd /stack && pdi-build-deps
 
-COPY bin /minion/bin/
-RUN set -e && cd /minion && for script in bin/* ; do perl -wc -Ilocal/lib/perl5 $script ; done
+COPY bin /stack/bin/
+RUN set -e && cd /stack && for script in bin/* ; do perl -wc $script ; done
 
 
 ### Runtime image
-FROM melopt/alpine-perl-runtime
-
-WORKDIR /app
+FROM melopt/perl-alt:latest-runtime
 
 RUN apk --no-cache add mariadb-client-libs postgresql-libs
 
-COPY --from=builder /minion /minion
+COPY --from=builder /stack /stack
 
-ENTRYPOINT [ "/minion/bin/entrypoint" ]
+ENTRYPOINT [ "/stack/bin/minion-entrypoint" ]
