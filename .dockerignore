@@ -1,0 +1,4 @@
+.DS_Store
+local/
+.docker-perl-local/
+.tidyall.d/
