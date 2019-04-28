@@ -13,7 +13,7 @@ RUN set -e && cd /stack && for script in bin/* ; do perl -wc $script ; done
 ### Runtime image
 FROM melopt/perl-alt:latest-runtime
 
-RUN apk --no-cache add mariadb-client-libs postgresql-libs
+RUN apk --no-cache add mariadb-client postgresql-libs
 
 COPY --from=builder /stack /stack
 
