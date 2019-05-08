@@ -9,10 +9,10 @@ my $cmd = $ARGV[0] || 'help';
 exec($ENV{SHELL} || '/bin/sh') if $cmd eq 'sh' or $cmd eq 'shell';
 
 shift @ARGV;
-print "CMD: '/minion/bin/worker_app', 'worker',  @ARGV\n";
-exec('/minion/bin/worker_app', 'minion', 'worker',  @ARGV)  if $cmd eq 'worker';
-exec('/minion/bin/worker_app', 'minion', 'job',     @ARGV)  if $cmd eq 'job';
-exec('/minion/bin/admin_app',  'prefork', @ARGV) if $cmd eq 'webui';
+print "CMD: '/stack/bin/worker_app', 'worker',  @ARGV\n";
+exec('/stack/bin/worker_app', 'minion', 'worker',  @ARGV)  if $cmd eq 'worker';
+exec('/stack/bin/worker_app', 'minion', 'job',     @ARGV)  if $cmd eq 'job';
+exec('/stack/bin/admin_app',  'prefork', @ARGV) if $cmd eq 'webui';
 
 print "ERROR: command '$cmd' not recognized\n\n" unless $cmd eq 'help';
 print <<HELP;

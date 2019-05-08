@@ -119,7 +119,7 @@ The image uses two environment variables for configuration:
 
 ## Starting everything up
 
-This image contains three scripts that do all the magic, under `/minion/bin`.
+This image contains three scripts that do all the magic, under `/stack/bin`.
 
 The [`entrypoint`](https://github.com/melo/docker-minion/blob/master/bin/entrypoint) script is the Docker entrypoint that implements the small sugar layer that makes using this image simpler.
 
