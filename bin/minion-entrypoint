@@ -3,7 +3,7 @@
 use strict;
 use warnings;
 
-$ENV{PERL5LIB} = '/app/lib:/app/local/lib/perl5:/minion/lib:/minion/local/lib/perl5';
+$ENV{PERL5LIB} = '/app/lib:/app/local/lib/perl5:/stack/lib:/stack/local/lib/perl5';
 
 my $cmd = $ARGV[0] || 'help';
 exec($ENV{SHELL} || '/bin/sh') if $cmd eq 'sh' or $cmd eq 'shell';
