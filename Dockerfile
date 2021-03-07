@@ -4,7 +4,7 @@ FROM melopt/perl-alt:latest-build AS builder
 RUN apk --no-cache add mariadb-dev postgresql-dev
 
 COPY cpanfile* /stack/
-RUN  cd /stack && pdi-build-deps
+RUN  cd /stack && pdi-build-deps --stack
 
 COPY bin /stack/bin/
 RUN set -e && cd /stack && for script in bin/* ; do perl -wc $script ; done
