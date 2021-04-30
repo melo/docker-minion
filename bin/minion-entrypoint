@@ -9,6 +9,9 @@ my $cmd = $ARGV[0] || 'help';
 exec($ENV{SHELL} || '/bin/sh') if $cmd eq 'sh' or $cmd eq 'shell';
 
 shift @ARGV;
+
+exec @ARGV if $cmd eq "exec";
+
 print "CMD: '/stack/bin/worker_app', 'worker',  @ARGV\n";
 exec('/stack/bin/worker_app', 'minion', 'worker',  @ARGV)  if $cmd eq 'worker';
 exec('/stack/bin/worker_app', 'minion', 'job',     @ARGV)  if $cmd eq 'job';
@@ -22,6 +25,7 @@ The <cmd> can be one of:
 
     help      shows this message (default)
     shell     starts a interactive shell
+    exec      executes the supplied arguments as command inside the container
 
     worker    starts a worker process. Use --help to see all <options>
     job       
@@ -31,5 +35,5 @@ More docs:
 
   * on Minion: https://metacpan.org/pod/Minion
   * on Minion worker options: https://metacpan.org/pod/Minion::Command::minion::worker
-  * 
+
 HELP
